@@ -1,0 +1,46 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: svc-efsoft-services-bffapi
+  labels:
+    version: dev
+    product: efsoft-services-bffapi
+spec:
+  selector:
+    app: efsoft-services-bffapi
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-efsoft-services-bffapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: efsoft-services-bffapi
+  template:
+    metadata:
+      labels:
+        app: efsoft-services-bffapi
+    spec:
+      containers:
+      - name: efsoft-services-bffapi
+        image: efsoftcr.azurecr.io/efsoft_bff:v1
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        ports:
+        - containerPort: 80
+        - containerPort: 443
