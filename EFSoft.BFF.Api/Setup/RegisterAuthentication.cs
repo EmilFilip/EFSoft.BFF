@@ -8,45 +8,32 @@ public static class RegisterAuthentication
              IConfiguration configuration)
     {
         var jwtSecret = configuration["JwtSecret"] ?? throw new ConfigNotFoundException("JwtSecret is either null or empty");
-        var jwtIssuer = configuration["JwtIssuer"] ?? throw new ConfigNotFoundException("JwtIssuer is either null or empty");
-        var jwtAudiences = configuration.GetSection("JwtAudience").Value == null
-            ? throw new ConfigNotFoundException("JwtAudience is either null or empty")
-            : configuration.GetSection("JwtAudience").Value!.Split(" ");
 
-        byte[] publicKeyBytes = Convert.FromBase64String(jwtSecret);
-        RsaKeyParameters rsaKeyParameters = (RsaKeyParameters)PublicKeyFactory.CreateKey(publicKeyBytes);
-
-        RSAParameters rsaParameters = new()
-        {
-            Modulus = rsaKeyParameters.Modulus.ToByteArrayUnsigned(),
-            Exponent = rsaKeyParameters.Exponent.ToByteArrayUnsigned(),
-        };
-
+        var key = Encoding.ASCII.GetBytes(jwtSecret);
         return services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(x =>
-        {
-            x.TokenValidationParameters = new TokenValidationParameters()
+            .AddJwtBearer(options =>
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtIssuer,
-                ValidAudiences = jwtAudiences,
-                IssuerSigningKey = new RsaSecurityKey(rsaParameters)
-            };
-
-            x.Events = new JwtBearerEvents
-            {
-                OnAuthenticationFailed = context =>
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
                     {
-                        context.Response.Headers.Add("Token-Expired", "true");
-                    }
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
 
-                    return Task.CompletedTask;
-                },
-            };
-        });
+                        return Task.CompletedTask;
+                    },
+                };
+            });
     }
 }
