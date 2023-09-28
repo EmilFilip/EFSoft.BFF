@@ -1,4 +1,4 @@
-﻿namespace EFSoft.BFF.Api.Customers.GetCustomer;
+﻿namespace EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomer;
 
 public class GetCustomerQueryResult
 {

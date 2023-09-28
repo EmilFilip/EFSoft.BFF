@@ -2,14 +2,19 @@
 global using System.Net.Http.Headers;
 global using System.Reflection;
 global using System.Text;
+global using System.Text.Json;
 
-global using EFSoft.BFF.Api.CustomerEndpoints;
-global using EFSoft.BFF.Api.Customers.Commands;
-global using EFSoft.BFF.Api.Customers.GetCustomer;
-global using EFSoft.BFF.Api.Customers.GetCustomers;
-global using EFSoft.BFF.Api.Customers.Models;
 global using EFSoft.BFF.Api.Exceptions;
 global using EFSoft.BFF.Api.Helpers;
+global using EFSoft.BFF.Api.MicroServices.Customers;
+global using EFSoft.BFF.Api.MicroServices.Customers.Commands;
+global using EFSoft.BFF.Api.MicroServices.Customers.Models;
+global using EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomer;
+global using EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomers;
+global using EFSoft.BFF.Api.MicroServices.Orders.Commands;
+global using EFSoft.BFF.Api.MicroServices.Orders.Models;
+global using EFSoft.BFF.Api.MicroServices.Orders.Queries.GetCustomerOrders;
+global using EFSoft.BFF.Api.MicroServices.Orders.Queries.GetOrder;
 global using EFSoft.BFF.Api.Setup;
 
 global using Microsoft.AspNetCore.Authentication;

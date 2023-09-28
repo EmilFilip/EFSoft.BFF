@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-
-namespace EFSoft.BFF.Api.Helpers;
+﻿namespace EFSoft.BFF.Api.Helpers;
 
 public static class HttpClientHelpers
 {

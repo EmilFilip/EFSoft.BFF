@@ -1,4 +1,4 @@
-﻿namespace EFSoft.BFF.Api.CustomerEndpoints;
+﻿namespace EFSoft.BFF.Api.MicroServices.Customers;
 
 public static class CustomerEndpoints
 {

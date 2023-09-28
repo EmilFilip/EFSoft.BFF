@@ -1,4 +1,6 @@
-﻿namespace EFSoft.BFF.Api.Customers.GetCustomers;
+﻿using EFSoft.BFF.Api.MicroServices.Customers.Models;
+
+namespace EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomers;
 
 public class GetCustomersQueryResult
 {

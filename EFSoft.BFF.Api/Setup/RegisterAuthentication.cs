@@ -3,6 +3,7 @@
 [ExcludeFromCodeCoverage]
 public static class RegisterAuthentication
 {
+    [ExcludeFromCodeCoverage]
     public static AuthenticationBuilder RegisterLocalAuthentication(
         this IServiceCollection services,
              IConfiguration configuration)

@@ -1,4 +1,4 @@
-﻿namespace EFSoft.BFF.Api.Customers.Models;
+﻿namespace EFSoft.BFF.Api.MicroServices.Customers.Models;
 
 public class CustomerModel
 {

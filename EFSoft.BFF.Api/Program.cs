@@ -20,11 +20,11 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.RegisterLocalAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
-builder.Services.AddHttpClient(builder.Configuration);
+builder.Services.AddLocalHttpClients(builder.Configuration);
 builder.Services.AddSwaggerAuthentication();
 
 var app = builder.Build();
-app.MapCustomerEndpoints();
+app.MapLocalEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
