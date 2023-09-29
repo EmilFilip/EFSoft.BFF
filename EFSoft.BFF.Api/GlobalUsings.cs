@@ -11,6 +11,8 @@ global using EFSoft.BFF.Api.MicroServices.Customers.Commands;
 global using EFSoft.BFF.Api.MicroServices.Customers.Models;
 global using EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomer;
 global using EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomers;
+global using EFSoft.BFF.Api.MicroServices.Inventory.Commands;
+global using EFSoft.BFF.Api.MicroServices.Inventory.Queries.GetInventory;
 global using EFSoft.BFF.Api.MicroServices.Orders.Commands;
 global using EFSoft.BFF.Api.MicroServices.Orders.Models;
 global using EFSoft.BFF.Api.MicroServices.Orders.Queries.GetCustomerOrders;

@@ -6,9 +6,10 @@ public static class RegisterHttpClient
     public static void AddLocalHttpClients(
         this IServiceCollection serviceCollection,
         IConfiguration configuration)
-    { 
-         _ = serviceCollection.AddCustomersHttpClient(configuration);
-         _ = serviceCollection.AddOrdersHttpClient(configuration);
+    {
+        _ = serviceCollection.AddCustomersHttpClient(configuration);
+        _ = serviceCollection.AddOrdersHttpClient(configuration);
+        _ = serviceCollection.AddInventoryHttpClient(configuration);
     }
 
     public static IHttpClientBuilder AddCustomersHttpClient(
@@ -37,6 +38,23 @@ public static class RegisterHttpClient
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClientConstants.OrdersServiceHttpCientName, x =>
+            {
+                x.BaseAddress = new Uri(ordersServiceBaseAddress);
+                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClientConstants.HttpCientApplicationUrlencodedAcceptHeader));
+            });
+
+        return builder;
+    }
+
+    public static IHttpClientBuilder AddInventoryHttpClient(
+        this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
+
+        string ordersServiceBaseAddress = configuration["InventoryService:InventoryServiceBaseAddress"] ?? throw new ConfigNotFoundException("InventoryServiceBaseAddress is either null or empty");
+
+        var builder = serviceCollection
+            .AddHttpClient(Constants.HttpClientConstants.InventoryServiceHttpCientName, x =>
             {
                 x.BaseAddress = new Uri(ordersServiceBaseAddress);
                 x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClientConstants.HttpCientApplicationUrlencodedAcceptHeader));

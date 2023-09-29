@@ -1,4 +1,6 @@
-﻿namespace EFSoft.BFF.Api.Setup;
+﻿using EFSoft.BFF.Api.MicroServices.Inventory;
+
+namespace EFSoft.BFF.Api.Setup;
 
 public static class ConfigureEndpoints
 {
@@ -7,5 +9,6 @@ public static class ConfigureEndpoints
     {
         app.MapCustomerEndpoints();
         app.MapOrderEndpoints();
+        app.MapInventoryEndpoints();
     }
 }

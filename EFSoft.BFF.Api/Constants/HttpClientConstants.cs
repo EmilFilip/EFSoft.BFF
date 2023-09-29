@@ -6,5 +6,7 @@ public static class HttpClientConstants
 
     public const string OrdersServiceHttpCientName = "OrdersServiceHttpCientName";
 
+    public const string InventoryServiceHttpCientName = "InventoryServiceHttpCientName";
+
     public const string HttpCientApplicationUrlencodedAcceptHeader = "application/x-www-form-urlencoded";
 }
