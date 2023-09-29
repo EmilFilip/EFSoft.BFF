@@ -8,5 +8,7 @@ public static class HttpClientConstants
 
     public const string InventoryServiceHttpCientName = "InventoryServiceHttpCientName";
 
+    public const string ProductsServiceHttpCientName = "ProductsServiceHttpCientName";
+
     public const string HttpCientApplicationUrlencodedAcceptHeader = "application/x-www-form-urlencoded";
 }

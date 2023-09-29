@@ -1,28 +1,28 @@
-﻿namespace EFSoft.BFF.Api.MicroServices.Customers;
+﻿namespace EFSoft.BFF.Api.MicroServices.Products;
 
-public static class CustomerEndpoints
+public static class ProductEndpoints
 {
-    public static void MapCustomerEndpoints(this IEndpointRouteBuilder endpoint)
+    public static void MapProductEndpoints(this IEndpointRouteBuilder endpoint)
     {
-        var group = endpoint.MapGroup("api/customer").RequireAuthorization();
+        var group = endpoint.MapGroup("api/product");//.RequireAuthorization();
 
-        group.MapGet("{customerId:guid}", Get);
-        group.MapGet("", GetCustomers);
+        group.MapGet("{productId:guid}", Get);
+        group.MapGet("", GetProducts);
         group.MapPost("", Post);
         group.MapPut("", Put);
-        group.MapDelete("{customerId:guid}", Delete);
+        group.MapDelete("{productId:guid}", Delete);
     }
 
-    public static async Task<Results<Ok<GetCustomerQueryResult>, NotFound>> Get(
-        Guid customerId,
+    public static async Task<Results<Ok<GetProductQueryResult>, NotFound>> Get(
+        Guid productId,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
         CancellationToken cancellationToken)
     {
-        var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.CustomersServiceHttpCientName);
-        var getCustomerEndpoint = configuration["CustomersService:GetCustomerEndpoint"] ?? throw new ConfigNotFoundException("GetCustomerEndpoint is either null");
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.ProductsServiceHttpCientName);
+        var getProductEndpoint = configuration["ProductsService:GetProductEndpoint"] ?? throw new ConfigNotFoundException("GetProductEndpoint is null");
 
-        var requestUri = new Uri($"{httpClient.BaseAddress}{getCustomerEndpoint}{customerId}");
+        var requestUri = new Uri($"{httpClient.BaseAddress}{getProductEndpoint}{productId}");
 
         var requestMessage = new HttpRequestMessage
         {
@@ -33,7 +33,7 @@ public static class CustomerEndpoints
         var response = await httpClient.SendAsync(requestMessage, cancellationToken);
 
         response.EnsureSuccessStatusCode();
-        var results = await response.Content.ReadFromJsonAsync<GetCustomerQueryResult>();
+        var results = await response.Content.ReadFromJsonAsync<GetProductQueryResult>();
 
         if (results == null)
         {
@@ -43,23 +43,23 @@ public static class CustomerEndpoints
         return TypedResults.Ok(results);
     }
 
-    public static async Task<Results<Ok<IEnumerable<CustomerModel>>, NotFound>> GetCustomers(
-        Guid[] customerIds,
+    public static async Task<Results<Ok<GetProductsQueryResult>, NotFound>> GetProducts(
+        Guid[] productIds,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
         CancellationToken cancellationToken)
     {
-        var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.CustomersServiceHttpCientName);
-        var getCustomersEndpoint = configuration["CustomersService:GetCustomersEndpoint"] ?? throw new ConfigNotFoundException("GetCustomersEndpoint is either null");
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.ProductsServiceHttpCientName);
+        var getProductsEndpoint = configuration["ProductsService:GetProductsEndpoint"] ?? throw new ConfigNotFoundException("GetProductsEndpoint is null");
 
-        var customerIdsUri = new StringBuilder();
+        var productIdsUri = new StringBuilder();
 
-        foreach (var customerId in customerIds)
+        foreach (var productId in productIds)
         {
-            customerIdsUri.Append($"&customerIds={customerId}");
+            productIdsUri.Append($"&productIds={productId}");
         }
 
-        var requestUri = new Uri($"{httpClient.BaseAddress}{getCustomersEndpoint}?{customerIdsUri}");
+        var requestUri = new Uri($"{httpClient.BaseAddress}{getProductsEndpoint}?{productIdsUri}");
 
         var requestMessage = new HttpRequestMessage
         {
@@ -69,31 +69,31 @@ public static class CustomerEndpoints
 
         var response = await httpClient.SendAsync(requestMessage, cancellationToken);
 
-        var results = await response.Content.ReadFromJsonAsync<GetCustomersQueryResult>();
         response.EnsureSuccessStatusCode();
+        var results = await response.Content.ReadFromJsonAsync<GetProductsQueryResult>();
 
         if (results == null)
         {
             return TypedResults.NotFound();
         }
 
-        return TypedResults.Ok(results.Customers);
+        return TypedResults.Ok(results);
     }
 
     public static async Task<IResult> Post(
-        [FromBody] CreateCustomerCommand parameters,
+        [FromBody] CreateProductCommand parameters,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
         CancellationToken cancellationToken)
     {
         var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.CustomersServiceHttpCientName);
-        var postCustomersEndpoint = configuration["CustomersService:PostCustomerEndpoint"] ?? throw new ConfigNotFoundException("PostCustomerEndpoint is either null");
+        var postProductEndpoint = configuration["ProductsService:PostProductEndpoint"] ?? throw new ConfigNotFoundException("PostProductEndpoint is either null");
 
         var requestMessage = new HttpRequestMessage
         {
             Method = HttpMethod.Post,
             Content = HttpClientHelpers.GetStringContent(parameters),
-            RequestUri = new Uri($"{httpClient.BaseAddress}{postCustomersEndpoint}")
+            RequestUri = new Uri($"{httpClient.BaseAddress}{postProductEndpoint}")
         };
 
         HttpResponseMessage response = await httpClient.SendAsync(requestMessage);
@@ -103,19 +103,19 @@ public static class CustomerEndpoints
     }
 
     public static async Task<IResult> Put(
-        [FromBody] UpdateCustomerCommand parameters,
+        [FromBody] UpdateProductCommand parameters,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
         CancellationToken cancellationToken)
     {
         var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.CustomersServiceHttpCientName);
-        var putCustomersEndpoint = configuration["CustomersService:PutCustomerEndpoint"] ?? throw new ConfigNotFoundException("PutCustomerEndpoint is either null");
+        var putProductEndpoint = configuration["ProductsService:PutProductEndpoint"] ?? throw new ConfigNotFoundException("PutProductEndpoint is either null");
 
         var requestMessage = new HttpRequestMessage
         {
             Method = HttpMethod.Put,
             Content = HttpClientHelpers.GetStringContent(parameters),
-            RequestUri = new Uri($"{httpClient.BaseAddress}{putCustomersEndpoint}")
+            RequestUri = new Uri($"{httpClient.BaseAddress}{putProductEndpoint}")
         };
 
         HttpResponseMessage response = await httpClient.SendAsync(requestMessage);
@@ -125,15 +125,15 @@ public static class CustomerEndpoints
     }
 
     public static async Task<IResult> Delete(
-        Guid customerId,
+        Guid productId,
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
         CancellationToken cancellationToken)
     {
         var httpClient = httpClientFactory.CreateClient(Constants.HttpClientConstants.CustomersServiceHttpCientName);
-        var deleteCustomerEndpoint = configuration["CustomersService:DeleteCustomerEndpoint"] ?? throw new ConfigNotFoundException("DeleteCustomerEndpoint key wasn't found");
+        var deleteProductEndpoint = configuration["ProductsService:DeleteProductEndpoint"] ?? throw new ConfigNotFoundException("DeleteProductEndpoint key wasn't found");
 
-        var requestUri = new Uri($"{httpClient.BaseAddress}{deleteCustomerEndpoint}{customerId}");
+        var requestUri = new Uri($"{httpClient.BaseAddress}{deleteProductEndpoint}{productId}");
 
         var requestMessage = new HttpRequestMessage
         {

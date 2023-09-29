@@ -11,12 +11,18 @@ global using EFSoft.BFF.Api.MicroServices.Customers.Commands;
 global using EFSoft.BFF.Api.MicroServices.Customers.Models;
 global using EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomer;
 global using EFSoft.BFF.Api.MicroServices.Customers.Queries.GetCustomers;
+global using EFSoft.BFF.Api.MicroServices.Inventory;
 global using EFSoft.BFF.Api.MicroServices.Inventory.Commands;
 global using EFSoft.BFF.Api.MicroServices.Inventory.Queries.GetInventory;
 global using EFSoft.BFF.Api.MicroServices.Orders.Commands;
 global using EFSoft.BFF.Api.MicroServices.Orders.Models;
 global using EFSoft.BFF.Api.MicroServices.Orders.Queries.GetCustomerOrders;
 global using EFSoft.BFF.Api.MicroServices.Orders.Queries.GetOrder;
+global using EFSoft.BFF.Api.MicroServices.Products;
+global using EFSoft.BFF.Api.MicroServices.Products.Commands;
+global using EFSoft.BFF.Api.MicroServices.Products.Models;
+global using EFSoft.BFF.Api.MicroServices.Products.Queries.GetProduct;
+global using EFSoft.BFF.Api.MicroServices.Products.Queries.GetProducts;
 global using EFSoft.BFF.Api.Setup;
 
 global using Microsoft.AspNetCore.Authentication;
