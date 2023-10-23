@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name: efsoft-services-bffapi
-        image: efsoft.azurecr.io/efsoft_bff:v1
+        image: efsoft.azurecr.io/efsoft-bff
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
