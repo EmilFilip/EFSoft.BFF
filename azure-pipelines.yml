@@ -44,8 +44,8 @@ stages:
         SourceFolder: '$(agent.builddirectory)'
         Contents: 
           $(agent.builddirectory)/**/k8s-deployment.yaml
-          /home/vsts/work/1/s/k8s-deployment.yaml
-          /**/k8s-deployment.yaml
+          'home/vsts/work/1/s/k8s-deployment.yaml'
+          '**/k8s-deployment.yaml'
         TargetFolder: '$(build.artifactstagingdirectory)'
     - task: PublishBuildArtifacts@1
       inputs:
