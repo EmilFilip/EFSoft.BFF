@@ -15,17 +15,17 @@ if (!builder.Environment.IsDevelopment())
     //builder.Logging.AddConsole();
 }
 
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Configuration.AddEnvironmentVariables();
+builder.Services.AddEndpointsApiExplorer();
+builder.Configuration.AddEnvironmentVariables();
 
 //builder.Services.RegisterLocalAuthentication(builder.Configuration);
-//builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();
 //builder.Services.AddLocalHttpClients(builder.Configuration);
-//builder.Services.AddSwaggerAuthentication();
+builder.Services.AddSwaggerAuthentication();
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
-app.MapLocalEndpoints();
+//app.MapLocalEndpoints();
 app.MapHealthChecks("/health");
 
 if (app.Environment.IsDevelopment())
@@ -38,6 +38,6 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.Run();
