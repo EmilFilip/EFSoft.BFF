@@ -8,9 +8,9 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
         _ = serviceCollection.AddCustomersHttpClient(configuration);
-        _ = serviceCollection.AddOrdersHttpClient(configuration);
-        _ = serviceCollection.AddInventoryHttpClient(configuration);
-        _ = serviceCollection.AddProductsHttpClient(configuration);
+        //_ = serviceCollection.AddOrdersHttpClient(configuration);
+        //_ = serviceCollection.AddInventoryHttpClient(configuration);
+        //_ = serviceCollection.AddProductsHttpClient(configuration);
     }
 
     public static IHttpClientBuilder AddCustomersHttpClient(

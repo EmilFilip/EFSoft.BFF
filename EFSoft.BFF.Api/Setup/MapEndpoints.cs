@@ -6,8 +6,8 @@ public static class ConfigureEndpoints
     public static void MapLocalEndpoints(this WebApplication app)
     {
         app.MapCustomerEndpoints();
-        app.MapOrderEndpoints();
-        app.MapInventoryEndpoints();
-        app.MapProductEndpoints();
+        //app.MapOrderEndpoints();
+        //app.MapInventoryEndpoints();
+        //app.MapProductEndpoints();
     }
 }
