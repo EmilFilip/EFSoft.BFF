@@ -9,7 +9,7 @@ public static class RegisterSwaggerAuthentication
         var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
         var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-        serviceCollection.AddSwaggerGen(x =>
+        _ = serviceCollection.AddSwaggerGen(x =>
         {
             x.SwaggerDoc("v1", new OpenApiInfo { Title = "BFF Microservice", Version = "v1" });
             x.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme

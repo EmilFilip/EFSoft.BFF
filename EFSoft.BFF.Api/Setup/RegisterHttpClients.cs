@@ -18,7 +18,7 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
 
-        string customersServiceBaseAddress = configuration["CustomersService:CustomersServiceBaseAddress"] ?? throw new ConfigNotFoundException("CustomersServiceBaseAddress is either null or empty");
+        var customersServiceBaseAddress = configuration["CustomersService:CustomersServiceBaseAddress"] ?? throw new ConfigNotFoundException("CustomersServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClientConstants.CustomersServiceHttpCientName, x =>
@@ -35,7 +35,7 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
 
-        string ordersServiceBaseAddress = configuration["OrdersService:OrdersServiceBaseAddress"] ?? throw new ConfigNotFoundException("OrdersServiceBaseAddress is either null or empty");
+        var ordersServiceBaseAddress = configuration["OrdersService:OrdersServiceBaseAddress"] ?? throw new ConfigNotFoundException("OrdersServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClientConstants.OrdersServiceHttpCientName, x =>
@@ -52,7 +52,7 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
 
-        string ordersServiceBaseAddress = configuration["InventoryService:InventoryServiceBaseAddress"] ?? throw new ConfigNotFoundException("InventoryServiceBaseAddress is either null or empty");
+        var ordersServiceBaseAddress = configuration["InventoryService:InventoryServiceBaseAddress"] ?? throw new ConfigNotFoundException("InventoryServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClientConstants.InventoryServiceHttpCientName, x =>
@@ -69,7 +69,7 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
 
-        string productsServiceBaseAddress = configuration["ProductsService:ProductsServiceBaseAddress"] ?? throw new ConfigNotFoundException("ProductsServiceBaseAddress is either null or empty");
+        var productsServiceBaseAddress = configuration["ProductsService:ProductsServiceBaseAddress"] ?? throw new ConfigNotFoundException("ProductsServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClientConstants.ProductsServiceHttpCientName, x =>

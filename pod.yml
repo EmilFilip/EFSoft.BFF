@@ -1,0 +1,13 @@
+﻿# Simple Kubernetes Pod to deploy the app contained in nigelpoulton/getting-started-k8s:1.0
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-bff-pod
+  labels:
+    app: bff
+spec:
+  containers:
+    - name: bff-ctr
+      image: emilfilip/efsoft_bff:dev
+      ports:
+        - containerPort: 8080

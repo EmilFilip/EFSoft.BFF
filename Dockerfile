@@ -8,14 +8,14 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
 
-COPY ["NuGet.Config", "."]
+#COPY ["NuGet.Config", "."]
 COPY ["EFSoft.BFF.Api/EFSoft.BFF.Api.csproj", "EFSoft.BFF.Api/"]
 
-ARG NUGET_PASSWORD
-RUN apk add --update sed 
-RUN sed -i "s|</configuration>|<packageSourceCredentials><emilfilip3><add key=\"Username\" value=\"emilfilip3\" /><add key=\"ClearTextPassword\" value=\"${NUGET_PASSWORD}\" /></emilfilip3></packageSourceCredentials></configuration>|" NuGet.Config
+#ARG NUGET_PASSWORD
+#RUN apk add --update sed 
+#RUN sed -i "s|</configuration>|<packageSourceCredentials><emilfilip3><add key=\"Username\" value=\"emilfilip3\" /><add key=\"ClearTextPassword\" value=\"${NUGET_PASSWORD}\" /></emilfilip3></packageSourceCredentials></configuration>|" NuGet.Config
 
-RUN dotnet restore "EFSoft.BFF.Api/EFSoft.BFF.Api.csproj" --configfile NuGet.Config
+RUN dotnet restore "EFSoft.BFF.Api/EFSoft.BFF.Api.csproj" #--configfile NuGet.Config
 
 COPY . .
 WORKDIR "/src/EFSoft.BFF.Api"
