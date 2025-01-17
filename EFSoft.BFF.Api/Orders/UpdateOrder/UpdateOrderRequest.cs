@@ -3,4 +3,4 @@
 public sealed record UpdateOrderRequest(
          Guid OrderId,
          string Description,
-         IEnumerable<OrderProductCreate> OrderProducts);
+         IEnumerable<OrderProductCreateDto> OrderProducts);

@@ -9,7 +9,7 @@ public static class RegisterHttpClient
     {
         _ = serviceCollection.AddCustomersHttpClient(configuration);
         _ = serviceCollection.AddInventoryHttpClient(configuration);
-        //_ = serviceCollection.AddOrdersHttpClient(configuration);
+        _ = serviceCollection.AddOrdersHttpClient(configuration);
         //_ = serviceCollection.AddProductsHttpClient(configuration);
     }
 

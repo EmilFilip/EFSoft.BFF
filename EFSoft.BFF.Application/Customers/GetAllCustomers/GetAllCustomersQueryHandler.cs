@@ -4,14 +4,14 @@ public class GetAllCustomersQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetAllCustomersQuery, GetAllCustomersQueryResult>
 {
     public async Task<GetAllCustomersQueryResult> Handle(
-            GetAllCustomersQuery parameters,
+            GetAllCustomersQuery query,
             CancellationToken cancellationToken = default)
     {
         var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.CustomersServiceHttpCientName);
 
         var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.GetAllCustomersEndpoint}");
 
-        var content = HttpClientHelpers.GetStringContent(parameters);
+        var content = HttpClientHelpers.GetStringContent(query);
 
         var httpRequest = new HttpRequestMessage
         {
@@ -24,8 +24,8 @@ public class GetAllCustomersQueryHandler(IHttpClientFactory httpClientFactory)
 
         _ = response.EnsureSuccessStatusCode();
 
-        var contentDeserialized = await response.Content.ReadAsAsync<GetCustomersHttpResponse>();
+        var getAllCustomersHttpResponse = await response.Content.ReadAsAsync<GetAllCustomersHttpResponse>();
 
-        return new GetAllCustomersQueryResult(contentDeserialized.PagedList);
+        return new GetAllCustomersQueryResult(getAllCustomersHttpResponse.PagedList);
     }
 }

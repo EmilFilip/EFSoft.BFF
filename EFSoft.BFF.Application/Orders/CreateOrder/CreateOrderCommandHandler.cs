@@ -6,28 +6,21 @@ public class CreateOrderCommandHandler(IHttpClientFactory httpClientFactory) : I
         CreateOrderCommand command,
         CancellationToken cancellationToken)
     {
-        //var order = OrderDomainModel.CreateNew(
-        //    description: command.Description,
-        //    customerId: command.CustomerId);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.OrdersServiceHttpCientName);
 
-        //await createOrderRepository.CreateOrderAsync(
-        //    order,
-        //    cancellationToken);
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.CreateOrderEndpoint}");
 
-        //var orderProducts = new List<OrderProductDomainModel>();
+        var content = HttpClientHelpers.GetStringContent(command);
 
-        //foreach (var orderProduct in command.OrderProducts)
-        //{
-        //    var newOrderProduct = OrderProductDomainModel.CreateNew(
-        //        orderId: order.OrderId,
-        //        productId: orderProduct.ProductId,
-        //        quantity: orderProduct.Quantity);
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = requestUri,
+            Content = content
+        };
 
-        //    orderProducts.Add(newOrderProduct);
-        //}
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
 
-        //await createOrderProductRepository.CreateOrderProductAsync(
-        //    orderProducts,
-        //    cancellationToken);
+        _ = response.EnsureSuccessStatusCode();
     }
 }

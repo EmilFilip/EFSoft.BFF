@@ -4,13 +4,13 @@ public class GetInventoryQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetInventoryQuery, GetInventoryQueryResult?>
 {
     public async Task<GetInventoryQueryResult?> Handle(
-            GetInventoryQuery parameters,
+            GetInventoryQuery query,
             CancellationToken cancellationToken = default)
     {
         var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.InventoryServiceHttpCientName);
 
         var requestUri = new Uri($"{httpClient.BaseAddress}" +
-            $"{Constants.HttpClient.ApiRoutes.GetInventoryEndpoint.Replace("{productId}", parameters.ProductId.ToString())}");
+            $"{Constants.HttpClient.ApiRoutes.GetInventoryEndpoint.Replace("{productId}", query.ProductId.ToString())}");
 
         var httpRequest = new HttpRequestMessage
         {

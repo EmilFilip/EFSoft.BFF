@@ -1,11 +1,4 @@
 ﻿namespace EFSoft.BFF.Application.Orders.GetOrder;
 
-public class GetOrderQueryResult
-{
-    public GetOrderQueryResult(OrderDomainModel order)
-    {
-        Order = order;
-    }
+public sealed record GetOrderQueryResult(OrderDomainModel Order);
 
-    public OrderDomainModel Order { get; }
-}

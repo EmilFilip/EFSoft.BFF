@@ -3,37 +3,28 @@
 public class GetCustomerOrdersQueryHandler(IHttpClientFactory httpClientFactory) : IQueryHandler<GetCustomerOrdersQuery, GetCustomerOrdersQueryResult>
 {
     public async Task<GetCustomerOrdersQueryResult> Handle(
-            GetCustomerOrdersQuery parameters,
+            GetCustomerOrdersQuery command,
             CancellationToken cancellationToken = default)
     {
-        //var orders = await getCustomerOrdersRepository.GetCustomerOrdersAsync(
-        //    customerId: parameters.CustomerId,
-        //    cancellationToken: cancellationToken);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.OrdersServiceHttpCientName);
 
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.GetCustomerOrdersEndpoint.Replace("{customerId}", command.CustomerId.ToString())}");
 
-        //if (!orders.Any())
-        //{
-        //    return new GetCustomerOrdersQueryResult(Enumerable.Empty<OrderDomainModel>());
-        //}
+        var content = HttpClientHelpers.GetStringContent(command);
 
-        //var ordersAndProducts = new List<OrderDomainModel>();
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = requestUri,
+            Content = content
+        };
 
-        //foreach (var order in orders)
-        //{
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
 
-        //    var orderProducts = await getOrderProductsForOrderRepository.GetOrderProductsForOrderAsync(
-        //        orderId: order.OrderId,
-        //        cancellationToken: cancellationToken);
+        _ = response.EnsureSuccessStatusCode();
 
-        //    if (orderProducts.Any())
-        //    {
-        //        order.OrderProducts = orderProducts;
-        //    }
-        //    ordersAndProducts.Add(order);
-        //}
+        var getCustomerOrdersHttpResponse = await response.Content.ReadAsAsync<GetCustomerOrdersHttpResponse>();
 
-        //return new GetCustomerOrdersQueryResult(ordersAndProducts);
-        return default;
+        return new GetCustomerOrdersQueryResult(getCustomerOrdersHttpResponse.Orders);
     }
 }
-

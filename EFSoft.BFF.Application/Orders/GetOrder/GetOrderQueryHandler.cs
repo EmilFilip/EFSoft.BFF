@@ -3,25 +3,25 @@
 public class GetOrderQueryHandler(IHttpClientFactory httpClientFactory) : IQueryHandler<GetOrderQuery, GetOrderQueryResult?>
 {
     public async Task<GetOrderQueryResult?> Handle(
-            GetOrderQuery parameters,
+            GetOrderQuery query,
             CancellationToken cancellationToken = default)
     {
-        //var order = await getOrderRepository.GetOrderAsync(
-        //    orderId: parameters.OrderId,
-        //    cancellationToken: cancellationToken);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.OrdersServiceHttpCientName);
 
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.GetOrderEndpoint.Replace("{orderId}", query.OrderId.ToString())}");
 
-        //if (order is null)
-        //{
-            return default;
-        //}
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = requestUri
+        };
 
-        //var products = await getOrderProductsForOrderRepository.GetOrderProductsForOrderAsync(
-        //    orderId: order.OrderId,
-        //    cancellationToken: cancellationToken);
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
 
-        //order.OrderProducts = products;
+        _ = response.EnsureSuccessStatusCode();
 
-        //return new GetOrderQueryResult(order);
+        var getOrderHttpResponse = await response.Content.ReadAsAsync<GetOrderHttpResponse>();
+
+        return new GetOrderQueryResult(getOrderHttpResponse.Order);
     }
 }

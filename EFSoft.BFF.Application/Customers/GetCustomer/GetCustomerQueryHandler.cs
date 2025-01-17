@@ -4,13 +4,13 @@ public class GetCustomerQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetCustomerQuery, GetCustomerQueryResult?>
 {
     public async Task<GetCustomerQueryResult?> Handle(
-            GetCustomerQuery parameters,
+            GetCustomerQuery query,
             CancellationToken cancellationToken = default)
     {
         var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.CustomersServiceHttpCientName);
 
         var requestUri = new Uri($"{httpClient.BaseAddress}" +
-            $"{Constants.HttpClient.ApiRoutes.GetCustomerEndpoint.Replace("{customerId}", parameters.CustomerId.ToString())}");
+            $"{Constants.HttpClient.ApiRoutes.GetCustomerEndpoint.Replace("{customerId}", query.CustomerId.ToString())}");
 
         var httpRequest = new HttpRequestMessage
         {

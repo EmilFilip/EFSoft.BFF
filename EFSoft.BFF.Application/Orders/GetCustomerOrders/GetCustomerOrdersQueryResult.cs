@@ -1,11 +1,4 @@
 ﻿namespace EFSoft.BFF.Application.Orders.GetCustomerOrders;
 
-public class GetCustomerOrdersQueryResult
-{
-    public GetCustomerOrdersQueryResult(IEnumerable<OrderDomainModel> orders)
-    {
-        Orders = orders;
-    }
+public sealed record GetCustomerOrdersQueryResult(IEnumerable<OrderDomainModel> Orders);
 
-    public IEnumerable<OrderDomainModel> Orders { get; }
-}

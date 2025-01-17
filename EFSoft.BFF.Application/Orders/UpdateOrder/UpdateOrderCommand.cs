@@ -3,4 +3,4 @@
 public sealed record UpdateOrderCommand(
          Guid OrderId,
          string Description,
-         IEnumerable<OrderProductCreate> OrderProducts) : ICommand;
+         IEnumerable<OrderProductCreateDto> OrderProducts) : ICommand;

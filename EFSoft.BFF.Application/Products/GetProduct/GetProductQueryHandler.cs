@@ -4,7 +4,7 @@ public class GetProductQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetProductQuery, GetProductQueryResult?>
 {
     public async Task<GetProductQueryResult?> Handle(
-            GetProductQuery parameters,
+            GetProductQuery query,
             CancellationToken cancellationToken = default)
     {
         //var product = await getProductRepository.GetProductAsync(
