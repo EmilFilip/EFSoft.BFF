@@ -3,19 +3,10 @@
 [ExcludeFromCodeCoverage]
 public static class RegisterServices
 {
-    public static IServiceCollection RegisterLocalServices(
-                this IServiceCollection services,
-                IConfiguration configuration)
+    public static IServiceCollection RegisterLocalServices(this IServiceCollection services)
     {
         return services
              .RegisterCqrs(typeof(GetCustomerQuery).Assembly)
-             //Customers
-             .AddScoped<ICreateCustomerRepository, CreateCustomerRepository>()
-             .AddScoped<IDeleteCustomerRepository, DeleteCustomerRepository>()
-             .AddScoped<IGetCustomerRepository, GetCustomerRepository>()
-             .AddScoped<IGetCustomersRepository, GetCustomersRepository>()
-             .AddScoped<IGetAllCustomersRepository, GetAllCustomersRepository>()
-             .AddScoped<IUpdateCustomerRepository, UpdateCustomerRepository>()
              //Products
              .AddScoped<ICreateProductRepository, CreateProductRepository>()
              .AddScoped<IDeleteProductRepository, DeleteProductRepository>()

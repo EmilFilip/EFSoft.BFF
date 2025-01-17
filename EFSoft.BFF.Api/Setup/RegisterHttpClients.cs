@@ -21,10 +21,10 @@ public static class RegisterHttpClient
         var customersServiceBaseAddress = configuration["CustomersService:CustomersServiceBaseAddress"] ?? throw new ConfigNotFoundException("CustomersServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
-            .AddHttpClient(Constants.HttpClientConstants.CustomersServiceHttpCientName, x =>
+            .AddHttpClient(Constants.HttpClient.CustomersServiceHttpCientName, x =>
         {
             x.BaseAddress = new Uri(customersServiceBaseAddress);
-            x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClientConstants.HttpCientApplicationUrlencodedAcceptHeader));
+            x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClient.HttpCientApplicationUrlencodedAcceptHeader));
         });
 
         return builder;
@@ -38,10 +38,10 @@ public static class RegisterHttpClient
         var ordersServiceBaseAddress = configuration["OrdersService:OrdersServiceBaseAddress"] ?? throw new ConfigNotFoundException("OrdersServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
-            .AddHttpClient(Constants.HttpClientConstants.OrdersServiceHttpCientName, x =>
+            .AddHttpClient(Constants.HttpClient.OrdersServiceHttpCientName, x =>
             {
                 x.BaseAddress = new Uri(ordersServiceBaseAddress);
-                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClientConstants.HttpCientApplicationUrlencodedAcceptHeader));
+                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClient.HttpCientApplicationUrlencodedAcceptHeader));
             });
 
         return builder;
@@ -55,10 +55,10 @@ public static class RegisterHttpClient
         var ordersServiceBaseAddress = configuration["InventoryService:InventoryServiceBaseAddress"] ?? throw new ConfigNotFoundException("InventoryServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
-            .AddHttpClient(Constants.HttpClientConstants.InventoryServiceHttpCientName, x =>
+            .AddHttpClient(Constants.HttpClient.InventoryServiceHttpCientName, x =>
             {
                 x.BaseAddress = new Uri(ordersServiceBaseAddress);
-                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClientConstants.HttpCientApplicationUrlencodedAcceptHeader));
+                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClient.HttpCientApplicationUrlencodedAcceptHeader));
             });
 
         return builder;
@@ -72,10 +72,10 @@ public static class RegisterHttpClient
         var productsServiceBaseAddress = configuration["ProductsService:ProductsServiceBaseAddress"] ?? throw new ConfigNotFoundException("ProductsServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
-            .AddHttpClient(Constants.HttpClientConstants.ProductsServiceHttpCientName, x =>
+            .AddHttpClient(Constants.HttpClient.ProductsServiceHttpCientName, x =>
             {
                 x.BaseAddress = new Uri(productsServiceBaseAddress);
-                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClientConstants.HttpCientApplicationUrlencodedAcceptHeader));
+                x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClient.HttpCientApplicationUrlencodedAcceptHeader));
             });
 
         return builder;

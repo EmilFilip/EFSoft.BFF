@@ -1,4 +1,5 @@
-﻿global using EFSoft.Bff.Domain.Products.Models;
+﻿global using System.Text.Json.Serialization;
+global using EFSoft.Bff.Domain.Products.Models;
 global using EFSoft.BFF.Domain.Customers.Models;
 global using EFSoft.BFF.Domain.Inventory.Models;
 global using EFSoft.BFF.Domain.Orders.Enums;

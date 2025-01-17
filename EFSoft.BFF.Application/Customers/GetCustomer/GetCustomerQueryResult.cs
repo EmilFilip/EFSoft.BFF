@@ -1,5 +1,7 @@
 ﻿namespace EFSoft.BFF.Application.Customers.GetCustomer;
 
 public sealed record GetCustomerQueryResult(
-        string FullName,
-        DateTimeOffset DateOfBirth);
+    Guid CustomerId,
+    string FullName,
+    DateTimeOffset DateOfBirth,
+    bool HasOpenedOrder);

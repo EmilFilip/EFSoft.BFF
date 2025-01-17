@@ -23,11 +23,13 @@ builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddLocalHttpClients(builder.Configuration);
 builder.Services.AddSwaggerAuthentication();
+
 builder.Services.AddHealthChecks();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerRequestValidator>();
-builder.Services.RegisterLocalServices(builder.Configuration);
+builder.Services.RegisterLocalServices();
 
 var app = builder.Build();
+app.MapCarter();
 app.MapHealthChecks("/health");
 
 app.UseSwagger();

@@ -1,15 +1,28 @@
 ﻿namespace EFSoft.BFF.Application.Customers.GetCustomer;
 
-public class GetCustomerQueryHandler(IGetCustomerRepository getCustomerRepository)
+public class GetCustomerQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetCustomerQuery, GetCustomerQueryResult?>
 {
     public async Task<GetCustomerQueryResult?> Handle(
             GetCustomerQuery parameters,
             CancellationToken cancellationToken = default)
     {
-        var customer = await getCustomerRepository.GetCustomerAsync(
-            customerId: parameters.CustomerId,
-            cancellationToken: cancellationToken);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.CustomersServiceHttpCientName);
+
+        var requestUri = new Uri($"{httpClient.BaseAddress}" +
+            $"{Constants.HttpClient.ApiRoutes.GetCustomerEndpoint.Replace("{customerId}", parameters.CustomerId.ToString())}");
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = requestUri
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
+
+        var customer = await response.Content.ReadAsAsync<CustomerModel>();
 
         if (customer is null)
         {
@@ -17,7 +30,9 @@ public class GetCustomerQueryHandler(IGetCustomerRepository getCustomerRepositor
         }
 
         return new GetCustomerQueryResult(
+            CustomerId: customer.CustomerId,
             FullName: customer.FullName,
-            DateOfBirth: customer.DateOfBirth);
+            DateOfBirth: customer.DateOfBirth,
+            HasOpenedOrder: customer.HasOpenOrder);
     }
 }

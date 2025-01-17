@@ -4,7 +4,7 @@ public class InventoryEndpointsMapping : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/product").WithTags("Inventory");
+        var group = app.MapGroup("api/inventory").WithTags("Inventory");
 
         _ = group.MapGet("/{productId:guid}", GetInventoryEndpoint.GetInventory);
 

@@ -1,0 +1,25 @@
+﻿namespace EFSoft.BFF.Domain;
+
+public static class Constants
+{
+    public static class HttpClient
+    {
+        public const int HttpClientMaxRetries = 10;
+        public const string CustomersServiceHttpCientName = "CustomersServiceHttpCientName";
+        public const string OrdersServiceHttpCientName = "OrdersServiceHttpCientName";
+        public const string InventoryServiceHttpCientName = "InventoryServiceHttpCientName";
+        public const string ProductsServiceHttpCientName = "ProductsServiceHttpCientName";
+        public const string HttpCientApplicationUrlencodedAcceptHeader = "application/x-www-form-urlencoded";
+
+        public static class ApiRoutes
+        {
+            public const string CreateCustomerEndpoint = "api/customer/";
+            public const string DeleteCustomerEndpoint = "api/customer/{customerId}";
+            public const string GetAllCustomersEndpoint = "api/customer/get-all-customers";
+            public const string GetCustomerEndpoint = "api/customer/{customerId}";
+            public const string GetCustomersEndpoint = "api/customer/get-customers";
+            public const string UpdateCustomerEndpoint = "api/customer/";
+
+        }
+    }
+}

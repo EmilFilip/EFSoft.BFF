@@ -6,8 +6,8 @@ public static class RegisterSwaggerAuthentication
     public static void AddSwaggerAuthentication(this IServiceCollection serviceCollection)
     {
         // Set the comments path for the Swagger JSON and UI.
-        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
         _ = serviceCollection.AddSwaggerGen(x =>
         {
@@ -35,7 +35,7 @@ public static class RegisterSwaggerAuthentication
                     new string[] { }
                 }
             });
-            x.IncludeXmlComments(xmlPath);
+            //x.IncludeXmlComments(xmlPath);
         });
     }
 }

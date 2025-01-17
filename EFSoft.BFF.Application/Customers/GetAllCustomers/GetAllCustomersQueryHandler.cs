@@ -1,23 +1,31 @@
 ﻿namespace EFSoft.BFF.Application.Customers.GetAllCustomers;
 
-public class GetAllCustomersQueryHandler(IGetAllCustomersRepository getAllCustomersRepository)
+public class GetAllCustomersQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetAllCustomersQuery, GetAllCustomersQueryResult>
 {
     public async Task<GetAllCustomersQueryResult> Handle(
             GetAllCustomersQuery parameters,
             CancellationToken cancellationToken = default)
     {
-        var pagedListParams = new PagedListParams(
-            parameters.SearchTerm,
-            parameters.SortColumn,
-            parameters.SortOrder,
-            parameters.Page,
-            parameters.PageSize);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.CustomersServiceHttpCientName);
 
-        var customers = await getAllCustomersRepository.GetAllCustomersAsync(
-            pagedListParams: pagedListParams,
-            cancellationToken: cancellationToken);
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.GetAllCustomersEndpoint}");
 
-        return new GetAllCustomersQueryResult(customers);
+        var content = HttpClientHelpers.GetStringContent(parameters);
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = requestUri,
+            Content = content
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
+
+        var contentDeserialized = await response.Content.ReadAsAsync<GetCustomersHttpResponse>();
+
+        return new GetAllCustomersQueryResult(contentDeserialized.PagedList);
     }
 }

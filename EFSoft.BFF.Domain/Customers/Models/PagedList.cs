@@ -1,12 +1,22 @@
 ﻿namespace EFSoft.BFF.Domain.Customers.Models;
 
-public sealed record PagedList<T>(
-    List<T> Items,
-    int TotalCount,
-    int Page,
-    int PageSize)
+public class PagedList<T>
 {
-    public bool HasNextPage => Page * PageSize < TotalCount;
+    [JsonPropertyName("items")]
+    public List<T> Items { get; set; }
 
-    public bool HasPreviousPage => Page > 1;
+    [JsonPropertyName("totalCount")]
+    public int TotalCount { get; set; }
+
+    [JsonPropertyName("page")]
+    public int Page { get; set; }
+
+    [JsonPropertyName("pageSize")]
+    public int PageSize { get; set; }
+
+    [JsonPropertyName("hasNextPage")]
+    public bool HasNextPage { get; set; }
+
+    [JsonPropertyName("hasPreviousPage")]
+    public bool HasPreviousPage { get; set; }
 }

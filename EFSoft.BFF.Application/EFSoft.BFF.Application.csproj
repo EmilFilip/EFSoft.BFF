@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="EFSoft.Shared.Cqrs" Version="1.0.347" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
