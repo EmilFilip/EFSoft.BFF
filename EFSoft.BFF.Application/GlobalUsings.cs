@@ -4,6 +4,7 @@ global using System.Text.Json.Serialization;
 global using EFSoft.Bff.Domain.Products.Models;
 global using EFSoft.BFF.Application.Helpers;
 global using EFSoft.BFF.Application.Orders.CreateOrder;
+global using EFSoft.BFF.Application.Products.GetProducts;
 global using EFSoft.BFF.Domain;
 global using EFSoft.BFF.Domain.Customers.Models;
 global using EFSoft.BFF.Domain.Inventory.Models;

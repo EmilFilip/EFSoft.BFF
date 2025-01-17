@@ -1,6 +1,6 @@
 ﻿namespace EFSoft.BFF.Domain.Orders.Models;
 
-public class OrderDomainModel
+public class OrderModel
 {
     [JsonPropertyName("orderId")]
     public Guid OrderId { get; set; }
@@ -15,5 +15,5 @@ public class OrderDomainModel
     public OrderStatus OrderStatus { get; set; }
 
     [JsonPropertyName("orderProducts")]
-    public IEnumerable<OrderProductDomainModel> OrderProducts { get; set; }
+    public IEnumerable<OrderProductModel> OrderProducts { get; set; }
 }

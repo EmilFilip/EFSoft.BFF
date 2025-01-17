@@ -29,6 +29,12 @@ public static class Constants
             public const string CreateOrderEndpoint = "api/order/";
             public const string UpdateOrderEndpoint = "api/order/";
             public const string UpdateOrderStatusEndpoint = "api/order/status";
+
+            public const string CreateProductEndpoint = "api/product/";
+            public const string DeleteProductEndpoint = "api/product/{productId}";
+            public const string GetProductEndpoint = "api/product/{productId}";
+            public const string GetProductsEndpoint = "api/product/get-products";
+            public const string UpdateProductEndpoint = "api/product/";
         }
     }
 }

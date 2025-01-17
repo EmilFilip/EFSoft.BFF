@@ -1,6 +1,6 @@
 ﻿namespace EFSoft.BFF.Domain.Orders.Models;
 
-public class OrderProductDomainModel
+public class OrderProductModel
 {
     [JsonPropertyName("orderProductId")]
     public Guid OrderProductId { get; set; }

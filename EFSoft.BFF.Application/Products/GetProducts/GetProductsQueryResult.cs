@@ -1,3 +1,3 @@
 ﻿namespace EFSoft.Bff.Application.Products.GetProducts;
 
-public sealed record GetProductsQueryResult(IEnumerable<ProductDomainModel> Products);
+public sealed record GetProductsQueryResult(IEnumerable<ProductModel> Products);

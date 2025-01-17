@@ -7,13 +7,21 @@ public class UpdateProductCommandHandler(IHttpClientFactory httpClientFactory)
         UpdateProductCommand command,
         CancellationToken cancellationToken)
     {
-        //var productModel = new ProductDomainModel(
-        //    productId: command.ProductId,
-        //    description: command.Description,
-        //    inStock: command.InStock);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.ProductsServiceHttpCientName);
 
-        //await updateProductRepository.UpdateProductAsync(
-        //    productModel,
-        //    cancellationToken);
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.UpdateProductEndpoint}");
+
+        var content = HttpClientHelpers.GetStringContent(command);
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Put,
+            RequestUri = requestUri,
+            Content = content
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
     }
 }

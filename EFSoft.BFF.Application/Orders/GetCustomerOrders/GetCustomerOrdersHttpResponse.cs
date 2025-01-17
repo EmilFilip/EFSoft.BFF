@@ -3,5 +3,5 @@
 public class GetCustomerOrdersHttpResponse
 {
     [JsonPropertyName("orders")]
-    public IEnumerable<OrderDomainModel> Orders { get; set; }
+    public IEnumerable<OrderModel> Orders { get; set; }
 }

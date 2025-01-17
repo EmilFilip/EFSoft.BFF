@@ -7,12 +7,21 @@ public class CreateProductCommandHandler(IHttpClientFactory httpClientFactory)
         CreateProductCommand command,
         CancellationToken cancellationToken)
     {
-        //var productModel = ProductDomainModel.CreateNew(
-        //    description: command.Description,
-        //    inStock: command.InStock);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.ProductsServiceHttpCientName);
 
-        //await createProductRepository.CreateProductAsync(
-        //    productModel,
-        //    cancellationToken);
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.CreateProductEndpoint}");
+
+        var content = HttpClientHelpers.GetStringContent(command);
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = requestUri,
+            Content = content
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
     }
 }

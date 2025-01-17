@@ -7,10 +7,25 @@ public class GetProductsQueryHandler(IHttpClientFactory httpClientFactory)
             GetProductsQuery query,
             CancellationToken cancellationToken = default)
     {
-        //var products = await getProductsRepository.GetProductsAsync(
-        //    productIds: parameters.ProductIds,
-        //    cancellationToken: cancellationToken);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.ProductsServiceHttpCientName);
 
-        return default; // new GetProductsQueryResult(products);
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.GetProductsEndpoint}");
+
+        var content = HttpClientHelpers.GetStringContent(query);
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = requestUri,
+            Content = content
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
+
+        var getProductsHttpResponse = await response.Content.ReadAsAsync<GetProductsHttpResponse>();
+
+        return new GetProductsQueryResult(getProductsHttpResponse.Products);
     }
 }

@@ -7,8 +7,18 @@ public class DeleteProductCommandHandler(IHttpClientFactory httpClientFactory)
         DeleteProductCommand command,
         CancellationToken cancellationToken)
     {
-        //await deleteProductRepository.DeleteProductAsync(
-        //    command.ProductId,
-        //    cancellationToken);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.ProductsServiceHttpCientName);
+
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.DeleteProductEndpoint.Replace("{productId}", command.ProductId.ToString())}");
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Delete,
+            RequestUri = requestUri
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
     }
 }
