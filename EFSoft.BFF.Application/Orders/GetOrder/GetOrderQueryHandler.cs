@@ -1,29 +1,27 @@
 ﻿namespace EFSoft.BFF.Application.Orders.GetOrder;
 
-public class GetOrderQueryHandler(
-    IGetOrderRepository getOrderRepository,
-    IGetOrderProductsForOrderRepository getOrderProductsForOrderRepository) : IQueryHandler<GetOrderQuery, GetOrderQueryResult?>
+public class GetOrderQueryHandler(IHttpClientFactory httpClientFactory) : IQueryHandler<GetOrderQuery, GetOrderQueryResult?>
 {
     public async Task<GetOrderQueryResult?> Handle(
             GetOrderQuery parameters,
             CancellationToken cancellationToken = default)
     {
-        var order = await getOrderRepository.GetOrderAsync(
-            orderId: parameters.OrderId,
-            cancellationToken: cancellationToken);
+        //var order = await getOrderRepository.GetOrderAsync(
+        //    orderId: parameters.OrderId,
+        //    cancellationToken: cancellationToken);
 
 
-        if (order is null)
-        {
+        //if (order is null)
+        //{
             return default;
-        }
+        //}
 
-        var products = await getOrderProductsForOrderRepository.GetOrderProductsForOrderAsync(
-            orderId: order.OrderId,
-            cancellationToken: cancellationToken);
+        //var products = await getOrderProductsForOrderRepository.GetOrderProductsForOrderAsync(
+        //    orderId: order.OrderId,
+        //    cancellationToken: cancellationToken);
 
-        order.OrderProducts = products;
+        //order.OrderProducts = products;
 
-        return new GetOrderQueryResult(order);
+        //return new GetOrderQueryResult(order);
     }
 }

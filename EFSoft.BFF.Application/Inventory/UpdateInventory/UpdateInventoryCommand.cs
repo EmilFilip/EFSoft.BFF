@@ -1,4 +1,4 @@
-﻿namespace EFSoft.Inventory.Application.UpdateInventory;
+﻿namespace EFSoft.BFF.Application.Inventory.UpdateInventory;
 
 public sealed record UpdateInventoryCommand(
          Guid ProductId,

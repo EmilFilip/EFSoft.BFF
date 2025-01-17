@@ -1,16 +1,16 @@
 ﻿namespace EFSoft.Bff.Application.Products.GetProducts;
 
-public class GetProductsQueryHandler(IGetProductsRepository getProductsRepository)
+public class GetProductsQueryHandler(IHttpClientFactory httpClientFactory)
     : IQueryHandler<GetProductsQuery, GetProductsQueryResult>
 {
     public async Task<GetProductsQueryResult> Handle(
             GetProductsQuery parameters,
             CancellationToken cancellationToken = default)
     {
-        var products = await getProductsRepository.GetProductsAsync(
-            productIds: parameters.ProductIds,
-            cancellationToken: cancellationToken);
+        //var products = await getProductsRepository.GetProductsAsync(
+        //    productIds: parameters.ProductIds,
+        //    cancellationToken: cancellationToken);
 
-        return new GetProductsQueryResult(products);
+        return default; // new GetProductsQueryResult(products);
     }
 }

@@ -1,4 +1,6 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using EFSoft.Shared.Cqrs.Configuration;
+
+var builder = WebApplication.CreateBuilder(args);
 
 if (!builder.Environment.IsDevelopment())
 {
@@ -26,7 +28,7 @@ builder.Services.AddSwaggerAuthentication();
 
 builder.Services.AddHealthChecks();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerRequestValidator>();
-builder.Services.RegisterLocalServices();
+builder.Services.RegisterCqrs(typeof(GetCustomerQuery).Assembly);
 
 var app = builder.Build();
 app.MapCarter();

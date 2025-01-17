@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EFSoft.BFF.Application\EFSoft.BFF.Application.csproj" />
-    <ProjectReference Include="..\EFSoft.BFF.Infrastructure\EFSoft.BFF.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

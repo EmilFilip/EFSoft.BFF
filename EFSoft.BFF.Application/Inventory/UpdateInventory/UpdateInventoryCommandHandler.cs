@@ -1,18 +1,27 @@
-﻿namespace EFSoft.Inventory.Application.UpdateInventory;
+﻿namespace EFSoft.BFF.Application.Inventory.UpdateInventory;
 
-public class UpdateInventoryCommandHandler(IUpdateProductInventoryRepository updateProductInventory)
+public class UpdateInventoryCommandHandler(IHttpClientFactory httpClientFactory)
     : ICommandHandler<UpdateInventoryCommand>
 {
     public async Task Handle(
         UpdateInventoryCommand command,
         CancellationToken cancellationToken)
     {
-        var inventoryModel = new ProductInventoryModel(
-            productId: command.ProductId,
-            stockLeft: command.StockLeft);
+        var httpClient = httpClientFactory.CreateClient(Constants.HttpClient.InventoryServiceHttpCientName);
 
-        await updateProductInventory.UpdateProductInventoryAsync(
-            inventoryModel,
-            cancellationToken);
+        var requestUri = new Uri($"{httpClient.BaseAddress}{Constants.HttpClient.ApiRoutes.UpdateInventoryEndpoint}");
+
+        var content = HttpClientHelpers.GetStringContent(command);
+
+        var httpRequest = new HttpRequestMessage
+        {
+            Method = HttpMethod.Put,
+            RequestUri = requestUri,
+            Content = content
+        };
+
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+
+        _ = response.EnsureSuccessStatusCode();
     }
 }

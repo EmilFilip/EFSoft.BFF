@@ -20,6 +20,9 @@ public static class Constants
             public const string GetCustomersEndpoint = "api/customer/get-customers";
             public const string UpdateCustomerEndpoint = "api/customer/";
 
+            public const string CreateInventoryEndpoint = "api/inventory/";
+            public const string GetInventoryEndpoint = "api/inventory/{productId}";
+            public const string UpdateInventoryEndpoint = "api/inventory/";
         }
     }
 }

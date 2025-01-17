@@ -1,19 +1,19 @@
 ﻿namespace EFSoft.Bff.Application.Products.UpdateProduct;
 
-public class UpdateProductCommandHandler(IUpdateProductRepository updateProductRepository)
+public class UpdateProductCommandHandler(IHttpClientFactory httpClientFactory)
     : ICommandHandler<UpdateProductCommand>
 {
     public async Task Handle(
         UpdateProductCommand command,
         CancellationToken cancellationToken)
     {
-        var productModel = new ProductDomainModel(
-            productId: command.ProductId,
-            description: command.Description,
-            inStock: command.InStock);
+        //var productModel = new ProductDomainModel(
+        //    productId: command.ProductId,
+        //    description: command.Description,
+        //    inStock: command.InStock);
 
-        await updateProductRepository.UpdateProductAsync(
-            productModel,
-            cancellationToken);
+        //await updateProductRepository.UpdateProductAsync(
+        //    productModel,
+        //    cancellationToken);
     }
 }

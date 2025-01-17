@@ -8,8 +8,8 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
         _ = serviceCollection.AddCustomersHttpClient(configuration);
+        _ = serviceCollection.AddInventoryHttpClient(configuration);
         //_ = serviceCollection.AddOrdersHttpClient(configuration);
-        //_ = serviceCollection.AddInventoryHttpClient(configuration);
         //_ = serviceCollection.AddProductsHttpClient(configuration);
     }
 
@@ -18,7 +18,7 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
 
-        var customersServiceBaseAddress = configuration["CustomersService:CustomersServiceBaseAddress"] ?? throw new ConfigNotFoundException("CustomersServiceBaseAddress is either null or empty");
+        var customersServiceBaseAddress = configuration["Microservices:CustomersServiceBaseAddress"] ?? throw new ConfigNotFoundException("CustomersServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClient.CustomersServiceHttpCientName, x =>
@@ -30,15 +30,15 @@ public static class RegisterHttpClient
         return builder;
     }
 
-    public static IHttpClientBuilder AddOrdersHttpClient(
+    public static IHttpClientBuilder AddInventoryHttpClient(
         this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
 
-        var ordersServiceBaseAddress = configuration["OrdersService:OrdersServiceBaseAddress"] ?? throw new ConfigNotFoundException("OrdersServiceBaseAddress is either null or empty");
+        var ordersServiceBaseAddress = configuration["Microservices:InventoryServiceBaseAddress"] ?? throw new ConfigNotFoundException("InventoryServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
-            .AddHttpClient(Constants.HttpClient.OrdersServiceHttpCientName, x =>
+            .AddHttpClient(Constants.HttpClient.InventoryServiceHttpCientName, x =>
             {
                 x.BaseAddress = new Uri(ordersServiceBaseAddress);
                 x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClient.HttpCientApplicationUrlencodedAcceptHeader));
@@ -47,15 +47,15 @@ public static class RegisterHttpClient
         return builder;
     }
 
-    public static IHttpClientBuilder AddInventoryHttpClient(
+    public static IHttpClientBuilder AddOrdersHttpClient(
         this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
 
-        var ordersServiceBaseAddress = configuration["InventoryService:InventoryServiceBaseAddress"] ?? throw new ConfigNotFoundException("InventoryServiceBaseAddress is either null or empty");
+        var ordersServiceBaseAddress = configuration["Microservices:OrdersServiceBaseAddress"] ?? throw new ConfigNotFoundException("OrdersServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
-            .AddHttpClient(Constants.HttpClient.InventoryServiceHttpCientName, x =>
+            .AddHttpClient(Constants.HttpClient.OrdersServiceHttpCientName, x =>
             {
                 x.BaseAddress = new Uri(ordersServiceBaseAddress);
                 x.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(Constants.HttpClient.HttpCientApplicationUrlencodedAcceptHeader));
@@ -69,7 +69,7 @@ public static class RegisterHttpClient
         IConfiguration configuration)
     {
 
-        var productsServiceBaseAddress = configuration["ProductsService:ProductsServiceBaseAddress"] ?? throw new ConfigNotFoundException("ProductsServiceBaseAddress is either null or empty");
+        var productsServiceBaseAddress = configuration["Microservices:ProductsServiceBaseAddress"] ?? throw new ConfigNotFoundException("ProductsServiceBaseAddress is either null or empty");
 
         var builder = serviceCollection
             .AddHttpClient(Constants.HttpClient.ProductsServiceHttpCientName, x =>
