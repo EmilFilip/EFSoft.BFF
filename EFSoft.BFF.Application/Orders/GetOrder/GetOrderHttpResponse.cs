@@ -3,5 +3,5 @@
 public class GetOrderHttpResponse
 {
     [JsonPropertyName("order")]
-    public OrderModel Order { get; set; }
+    public OrderModel? Order { get; set; }
 }

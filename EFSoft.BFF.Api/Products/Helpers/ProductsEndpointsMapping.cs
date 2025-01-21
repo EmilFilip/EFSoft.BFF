@@ -1,10 +1,12 @@
-﻿namespace EFSoft.Products.Api.Helpers;
+﻿namespace EFSoft.BFF.Api.Products.Helpers;
 
-public class EndpointsMapping : ICarterModule
+public class ProductsEndpointsMapping : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/product").WithTags("Products");
+        var group = app.MapGroup("api/product").WithTags(FeatureFlags.Products)
+            .AddEndpointFilter(new FeatureFlagEndpointFilter(FeatureFlags.Products));
+        //.RequireAuthorization();
 
         _ = group.MapGet("/{productId:guid}", GetProductEndpoint.GetProduct);
 

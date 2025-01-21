@@ -1,10 +1,11 @@
 ﻿namespace EFSoft.BFF.Api.Customers.Helpers;
 
-public class CustomerEndpointsMapping : ICarterModule
+public class CustomersEndpointsMapping : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/customer").WithTags("Customers");
+        var group = app.MapGroup("api/customer").WithTags(FeatureFlags.Customers)
+            .AddEndpointFilter(new FeatureFlagEndpointFilter(FeatureFlags.Customers));
         //.RequireAuthorization();
 
         _ = group.MapGet("/{customerId:guid}", GetCustomerEndpoint.GetCustomer);

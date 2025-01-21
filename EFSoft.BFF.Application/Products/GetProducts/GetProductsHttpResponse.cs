@@ -3,5 +3,5 @@
 public class GetProductsHttpResponse
 {
     [JsonPropertyName("products")]
-    public IEnumerable<ProductModel> Products { get; set; }
+    public IEnumerable<ProductModel>? Products { get; set; }
 }

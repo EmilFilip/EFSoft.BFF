@@ -1,11 +1,12 @@
-﻿using EFSoft.BFF.Api.Orders.CreateOrder;
-namespace EFSoft.BFF.Api.Orders.Helpers;
+﻿namespace EFSoft.BFF.Api.Orders.Helpers;
 
 public class OrdersEndpointsMapping : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/order").WithTags("Orders");
+        var group = app.MapGroup("api/order").WithTags(FeatureFlags.Orders)
+            .AddEndpointFilter(new FeatureFlagEndpointFilter(FeatureFlags.Orders));
+        //.RequireAuthorization();
 
         _ = group.MapGet("{orderId:guid}", GetOrderEndpoint.Get);
 

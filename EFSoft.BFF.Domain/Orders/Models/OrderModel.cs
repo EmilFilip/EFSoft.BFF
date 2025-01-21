@@ -15,5 +15,5 @@ public class OrderModel
     public OrderStatus OrderStatus { get; set; }
 
     [JsonPropertyName("orderProducts")]
-    public IEnumerable<OrderProductModel> OrderProducts { get; set; }
+    public IEnumerable<OrderProductModel>? OrderProducts { get; set; }
 }

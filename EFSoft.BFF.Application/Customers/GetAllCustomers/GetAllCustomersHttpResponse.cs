@@ -3,5 +3,5 @@
 public class GetAllCustomersHttpResponse
 {
     [JsonPropertyName("pagedList")]
-    public PagedList<CustomerModel> PagedList { get; set; }
+    public PagedList<CustomerModel>? PagedList { get; set; }
 }
