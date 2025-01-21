@@ -6,12 +6,12 @@ public static class RegisterSwaggerAuthentication
     public static void AddSwaggerAuthentication(this IServiceCollection serviceCollection)
     {
         // Set the comments path for the Swagger JSON and UI.
-        //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
         _ = serviceCollection.AddSwaggerGen(x =>
         {
-            x.SwaggerDoc("v1", new OpenApiInfo { Title = "BFF Microservice", Version = "v1" });
+            //x.SwaggerDoc("v1", new OpenApiInfo { Title = "BFF Microservice", Version = "v1" });
             x.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
             {
                 Name = "Authorization",
@@ -35,7 +35,7 @@ public static class RegisterSwaggerAuthentication
                     new string[] { }
                 }
             });
-            //x.IncludeXmlComments(xmlPath);
+            x.IncludeXmlComments(xmlPath);
         });
     }
 }

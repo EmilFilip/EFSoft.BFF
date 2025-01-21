@@ -24,20 +24,45 @@ builder.Services.AddAuthorization();
 builder.Services.AddLocalHttpClients(builder.Configuration);
 builder.Services.AddSwaggerAuthentication();
 builder.Services.AddFeatureManagement();
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Version"));
+})
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+builder.Services.ConfigureOptions<RegisterSwaggerOptions>();
 builder.Services.AddHealthChecks();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerRequestValidator>();
 builder.Services.RegisterCqrs(typeof(GetCustomerQuery).Assembly);
 
 var app = builder.Build();
-app.MapCarter();
+
+app.MapAllEndpoints();
 
 app.MapHealthChecks("/health");
-
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BFF Microservice V1");
-});
+    _ = app.UseSwagger();
+    _ = app.UseSwaggerUI(options =>
+    {
+        var descriptions = app.DescribeApiVersions();
+        foreach (var description in descriptions)
+        {
+            var url = $"{description.GroupName}/swagger.json";
+            var name = description.GroupName.ToUpperInvariant();
+            options.SwaggerEndpoint(url, name);
+        }
+    });
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
