@@ -16,7 +16,7 @@ public class CustomersEndpointsMapping : ICarterModule
             .MapToApiVersion(1)
             .AddEndpointFilter<ValidationFilter<GetCustomersRequest>>();
 
-        _ = group.MapPost("/get-customers", GetCustomersEndpoint.GetCustomersv2)
+        _ = group.MapPost("/get-customers", GetCustomersEndpoint.GetCustomersV2)
             .MapToApiVersion(2)
             .AddEndpointFilter<ValidationFilter<GetCustomersRequest>>();
 

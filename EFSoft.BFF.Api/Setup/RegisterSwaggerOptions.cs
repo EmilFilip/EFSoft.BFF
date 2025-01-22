@@ -10,7 +10,10 @@ public class RegisterSwaggerOptions(IApiVersionDescriptionProvider apiVersionDes
             var openApiInfo = new OpenApiInfo
             {
                 Title = $"BFF Microservice v{versionDescription.ApiVersion}",
-                Version = versionDescription.ApiVersion.ToString(),
+                Version = versionDescription.IsDeprecated
+                    ? $"{versionDescription.ApiVersion.ToString()} This API version has been deprecated."
+                    : versionDescription.ApiVersion.ToString(),
+                Description = "BFF Service, the entry point to access the rest of the microservices"
             };
 
             swaggerGenOptions.SwaggerDoc(versionDescription.GroupName, openApiInfo);

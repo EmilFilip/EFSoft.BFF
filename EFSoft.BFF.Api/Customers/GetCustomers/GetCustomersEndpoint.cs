@@ -21,7 +21,7 @@ public static class GetCustomersEndpoint
         return TypedResults.Ok(results);
     }
 
-    public static async Task<Results<Ok<GetCustomersQueryResult>, NotFound>> GetCustomersv2(
+    public static async Task<Results<Ok<GetCustomersQueryResult>, NotFound>> GetCustomersV2(
         [FromBody] GetCustomersRequest getCustomersRequest,
         IMediator mediator,
         CancellationToken cancellationToken)
